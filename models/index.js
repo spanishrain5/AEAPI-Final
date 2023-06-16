@@ -66,7 +66,7 @@ db.amenity.belongsTo(db.accommodation, { foreignKey: 'accommodation_id' });
 // OPTIONAL: synchronize the DB with the sequelize model
 (async () => {
     try {
-        await db.sequelize.sync({ force: true });
+        await db.sequelize.sync({ /*force: true*/ });
         console.log('DB is successfully synchronized')
     } catch (error) {
         console.log(error)
