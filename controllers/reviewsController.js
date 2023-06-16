@@ -54,7 +54,7 @@ exports.create = async (req, res) => {
     
         let accommodation = await Accommodation.findAll({
             where: {
-                id: req.body.accommodation_id
+                id: req.params.id
             },
             attributes: ['validated'],
             raw: true
