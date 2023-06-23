@@ -72,7 +72,7 @@ exports.findAll = async (req, res) => {
 
         if (!isEmpty(req.query)) {
 
-            var accommodationsQuery = "SELECT `id`, `facilitator_id`, `validated`, `title`, `area`, `adress`, `room_type`, `number_of_beds`, `bed_type`, `max_guests`, `minimum_stay`, `rating`, `price` FROM `accommodations` AS `accommodations`";
+            var accommodationsQuery = "SELECT `accommodations`.`id`, `facilitator_id`, `validated`, `title`, `area`, `adress`, `room_type`, `number_of_beds`, `bed_type`, `max_guests`, `minimum_stay`, `rating`, `price` FROM `accommodations` AS `accommodations` LEFT OUTER JOIN `amenities` AS `amenities` ON `accommodations`.`id` = `amenities`.`accommodation_id`";
             var attributeCounter = 0;
 
             if (req.query.validated) {
@@ -132,7 +132,11 @@ exports.findAll = async (req, res) => {
         else {
             var accommodations = await Accommodation.findAll({ 
                 attributes: ['id', 'facilitator_id', 'validated', 'title', 'area', 'adress', 'room_type', 'number_of_beds', 'bed_type', 
-                'max_guests', 'minimum_stay', 'rating', 'price'] 
+                'max_guests', 'minimum_stay', 'rating', 'price'],
+                include: [{
+                    model: Amenity,
+                    attributes: ['amenity']
+                }]
             })
         }
         // do not expose users' sensitive data
