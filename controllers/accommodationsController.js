@@ -262,6 +262,10 @@ exports.update = async (req, res) => {
             return res.status(400).json({
                 success: false, msg: "Please edit at least one parameter"
             });
+        } else if (!isEmpty(req.body.validated)) {
+            return res.status(403).json({
+                success: false, msg: "You do not have permission to access this resource (only admin can validate accommodation)"
+            });
         } else {
             listing.update (req.body)
                 .then(data => {
